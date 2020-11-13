@@ -1,7 +1,7 @@
 # DockerSecurity
 ### Example of usage
 ```bash
-ivan@dockersec:~$  python3 main.py -i nginx -c confident_ellis  --info
+ivan@dockersec:~$  python3 docker_check.py -i nginx -c confident_ellis  --info
 Docker Image Warnings:
 [Users]:        No user in image
 Docker Container Info:
