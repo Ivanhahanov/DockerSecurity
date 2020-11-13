@@ -1,8 +1,7 @@
 import docker
-from pprint import pprint
-from images import CheckImage
-from check import CheckContainer
-from info import show_info
+from source.images import CheckImage
+from source.check import CheckContainer
+from source.info import show_info
 import argparse
 
 parser = argparse.ArgumentParser(description='Process some integers.')

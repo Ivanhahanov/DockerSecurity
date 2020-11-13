@@ -1,6 +1,6 @@
-from limits import ContainerLimits
-from mounts import ContainerMounts
-from capability import ContainerCapability
+from source.limits import ContainerLimits
+from source.mounts import ContainerMounts
+from source.capability import ContainerCapability
 
 
 class CheckContainer:
