@@ -4,7 +4,6 @@ class ContainerCapability:
 
     def is_cap_drop(self):
         dropped_cap = self.inspected_container['HostConfig'].get('CapDrop', None)
-        print(dropped_cap)
         if dropped_cap is None:
             return False
         if type(dropped_cap) is list:
