@@ -28,8 +28,8 @@ if args.image is not None:
     image_names_with_id = {field['RepoTags'][0].split(':')[0]: field['Id'].split(':')[-1] for field in images_list}
     if args.image in image_names_with_id.keys():
         image_id = image_names_with_id[args.image]
-        inspected_images = [client.inspect_image(image_id) for field in images_list]
-        check_image = CheckImage(inspected_images[1])
+        pprint(client.inspect_image(image_id))
+        check_image = CheckImage(client.inspect_image(image_id))
         print('Docker Image Warnings:')
         print_result(**check_image.check_image())
 
@@ -40,6 +40,6 @@ if args.container is not None:
     if args.container in container_names_with_id.keys():
         container_id = container_names_with_id[args.container]
         check_container = CheckContainer(client.inspect_container(container_id))
-        print()
+        pprint(client.inspect_container(container_id))
         print('Docker Container Info:')
         print_result(**check_container.check_container())
