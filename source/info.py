@@ -9,6 +9,11 @@ def get_info(**kwargs):
     for arg in kwargs.keys():
         if arg == 'CapDrop':
             info["Capabilities"] = get_help('capability_help')
+        if arg == 'Mounts':
+            info["Mounts"] = get_help('mount_help')
+        if arg == 'Mounts':
+            info["Users"] = get_help('users_help')
+
     return info
 
 
