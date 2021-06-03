@@ -4,6 +4,7 @@ from source.check import CheckContainer
 from source.info import show_info
 import argparse
 from pprint import pprint
+import time
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('-i', '--image',
@@ -41,11 +42,18 @@ if args.reverse:
 
 if args.image:
     # Docker Images
+    start_time = time.time()
     images_list = client.images()
-    image_names_with_id = {field['RepoTags'][0].split(':')[0]: field['Id'].split(':')[-1] for field in images_list}
+    image_names_with_id = dict()
+    for field in images_list:
+        repo_tag = field.get('RepoTags')
+        image_id = field.get('Id')
+        if repo_tag:
+            for tag in repo_tag:
+                image_names_with_id[tag] = image_id.split(':')[-1]
+
     if args.image in image_names_with_id.keys():
         image_id = image_names_with_id[args.image]
-        # pprint(client.inspect_image(image_id))
         check_image = CheckImage(client.inspect_image(image_id))
         print('Docker Image Warnings:')
         image_result = check_image.check_image()
@@ -53,12 +61,11 @@ if args.image:
 
 if args.container:
     # Docker Containers
-    containers_list = client.containers()
+    containers_list = client.containers(all=True)
     container_names_with_id = {container['Names'][0][1:]: container['Id'] for container in containers_list}
     if args.container in container_names_with_id.keys():
         container_id = container_names_with_id[args.container]
         check_container = CheckContainer(client.inspect_container(container_id))
-        pprint(client.inspect_container(container_id))
         print('Docker Container Info:')
         container_result = check_container.check_container()
         print_result(**container_result)
